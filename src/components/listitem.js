@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
 /*global google*/
 
-export default class ListItem extends Component {
-  constructor() {
-    super();
+class ListItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      venues: [],
+      markers:[],
+    };
   }
+
+  componentDidMount() {
+
+  }
+
+
   render() {
 
     return (
 
-      <li className="listItem"
-      {
-        this.props.filteredVenues && this.props.filteredVenues.length > 0 && this.props.filteredVenues.map((venue, index) => (
-          <div key={index} className="venue-item" onClick={() => { this.props.listItemClick(venue) }}>
-            <img src={this.props.categories[0].icon.prefix+"32"+this.props.categories[0].icon.suffix} alt={this.props.categories[0].name}/>
-            { venue.name }
-          </div>
-        ))
-      }
-    </li>
-  );
+      <ol className="venueList"></ol>
+
+      <li className="listItem" key={index} onClick={() => { this.props.listItemClick(venue) }}>
+        { venue.name }
+      </li>
+    );
   }
 }
+
+export default ListItem

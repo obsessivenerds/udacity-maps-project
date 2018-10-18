@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { load_google_maps, load_locations } from "./utils";
 import SquareAPI from "./API/FourSquareAPI";
@@ -90,15 +89,14 @@ listItemClick = (venue) => {
 
   render() {
     return (
-      <div>
-        <div id="map">
-
-        </div>
-
+      <div className="App">
         <SideBar
           listItemClick = { this.listItemClick }
           filterVenues = { this.filterVenues }
           filteredVenues = { this.state.filteredVenues }/>
+        <div id="map">
+
+        </div>
       </div>
     );
   }
