@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 import { load_google_maps, load_locations } from "./utils";
 import SquareAPI from "./API/FourSquareAPI";
-import SideBar from './components/sidebar'
+import SideBar from './components/sidebar';
 /*global google*/
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
+      query: '',
+      venues: []
     }
   }
 
@@ -28,7 +29,7 @@ componentDidMount() {
 
     this.google = google;
     this.markers = [];
-    this.infowindow = new google.maps.InfoWindow();
+    this.infoWindow = new google.maps.InfoWindow();
     this.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 9,
       scrollwheel: true,
@@ -42,6 +43,7 @@ componentDidMount() {
         venue: venue,
         id: venue.id,
         name: venue.name,
+        location: venue.location.formattedAddress,
         animation: google.maps.Animation.DROP
       });
 
@@ -49,12 +51,22 @@ componentDidMount() {
         if (marker.getAnimation() !== null) { marker.setAnimation(null) }
         else { marker.setAnimation(google.maps.Animation.BOUNCE) }
         setTimeout(() => { marker.setAnimation(null) }, 1400);
+        SquareAPI.getVenueDetails(marker.id)
+        .then(res => {
+          console.log(res);
+          const newMarker = res.response.venue;
+          const markerData = {
+            rating: newMarker.rating,
+            Price: newMarker.price.message
+          };
+          console.log(markerData);
+        });
       })
 
       google.maps.event.addListener(marker, 'click', () => {
-        this.infowindow.setContent(marker.name);
+        this.infoWindow.setContent(marker.name);
         this.map.setCenter(marker.position);
-        this.infowindow.open(this.map, marker);
+        this.infoWindow.open(this.map, marker);
       });
 
       this.markers.push(marker);
@@ -78,13 +90,30 @@ filterVenues = (query) => {
 
 }
 
+markerClick = (marker) => {
+
+}
+
 listItemClick = (venue) => {
-  let marker = this.markers.filter(m => m.id === venue.id)[0];
-  this.infowindow.setContent(marker.name);
+  let marker = this.markers.filter(mrk => mrk.id === venue.id)[0];
+
   this.map.setCenter(marker.position);
-  this.infowindow.open(this.map, marker);
+  this.infoWindow.open(this.map, marker);
   {marker.setAnimation(google.maps.Animation.BOUNCE)};
   setTimeout(() => { marker.setAnimation(null) }, 1400);
+  SquareAPI.getVenueDetails(marker.id)
+  .then(res => {
+    console.log(res);
+    const newVenue = res.response.venue;
+    const venueData = {
+      photoPrefix: newVenue.bestPhoto.prefix,
+      photoSuffix: newVenue.bestPhoto.suffix,
+      url: "Website: " + newVenue.url,
+      price: "Price: " + newVenue.price.message
+    };
+    this.infoWindow.setContent("<img src="+ venueData.photoPrefix + "200x200" + venueData.photoSuffix + ">" + "<p>"+venueData.url+ "</p>" + "<p>"+venueData.price+"</p>");
+    console.log(venueData);
+  });
 }
 
   render() {

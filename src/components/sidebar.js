@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import ListItem from "./listitem";
+import VenueList from "./venuelist";
 /*global google*/
 
 export default class SideBar extends Component {
@@ -16,13 +16,9 @@ componentDidMount() {
         <div id="sidebar">
           <input id="search" type="search" placeholder="Filter Venues" value={this.props.query} onChange={(e) => { this.props.filterVenues(e.target.value) }}/>
           <br/>
-          {
-            this.props.filteredVenues && this.props.filteredVenues.length > 0 && this.props.filteredVenues.map((venue, index) => (
-              <li className="listItem" key={index} onClick={() => { this.props.listItemClick(venue) }}>
-                { venue.name }
-              </li>
-            ))
-          }
+          <VenueList
+            {...this.props} listItemClick={this.props.listItemClick}
+          filteredVenues={this.props.filteredVenues}  />
         </div>
     );
   }

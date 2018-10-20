@@ -18,11 +18,8 @@ class ListItem extends Component {
   render() {
 
     return (
-
-      <ol className="venueList"></ol>
-
-      <li className="listItem" key={index} onClick={() => { this.props.listItemClick(venue) }}>
-        { venue.name }
+      <li className="listItem" key={this.props.index} onClick={() => { this.props.listItemClick(this.props.venue) }}>
+        { this.props.venue.name }
       </li>
     );
   }
