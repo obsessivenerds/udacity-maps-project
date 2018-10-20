@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ListItem from "./listitem"
-/*global google*/
 
 class VenueList extends Component {
   constructor(props) {

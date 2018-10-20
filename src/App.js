@@ -30,8 +30,9 @@ componentDidMount() {
     this.google = google;
     this.markers = [];
     this.infoWindow = new google.maps.InfoWindow();
+    this.simpleWindow = new google.maps.InfoWindow();
     this.map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 9,
+      zoom: 15,
       scrollwheel: true,
       center: { lat: this.venues[0].location.lat, lng: this.venues[0].location.lng }
     });
@@ -47,26 +48,20 @@ componentDidMount() {
         animation: google.maps.Animation.DROP
       });
 
-      marker.addListener('click', () => {
-        if (marker.getAnimation() !== null) { marker.setAnimation(null) }
-        else { marker.setAnimation(google.maps.Animation.BOUNCE) }
-        setTimeout(() => { marker.setAnimation(null) }, 1400);
-        SquareAPI.getVenueDetails(marker.id)
-        .then(res => {
-          console.log(res);
-          const newMarker = res.response.venue;
-          const markerData = {
-            rating: newMarker.rating,
-            Price: newMarker.price.message
-          };
-          console.log(markerData);
-        });
+      google.maps.event.addListener(marker, 'mouseover', () => {
+        this.simpleWindow.open(this.map, marker);
+        this.simpleWindow.setContent(venue.name);
+      });
+
+      google.maps.event.addListener(marker, 'mouseout', () => {
+        this.simpleWindow.close();
       })
 
       google.maps.event.addListener(marker, 'click', () => {
-        this.infoWindow.setContent(marker.name);
+        this.listItemClick(venue);
         this.map.setCenter(marker.position);
         this.infoWindow.open(this.map, marker);
+        this.simpleWindow.close();
       });
 
       this.markers.push(marker);
@@ -85,19 +80,14 @@ filterVenues = (query) => {
     marker.setVisible(true) :
     marker.setVisible(false);
   });
-
   this.setState({ filteredVenues: f, query });
-
-}
-
-markerClick = (marker) => {
-
 }
 
 listItemClick = (venue) => {
   let marker = this.markers.filter(mrk => mrk.id === venue.id)[0];
 
   this.map.setCenter(marker.position);
+  this.map.panBy(0, -150);
   this.infoWindow.open(this.map, marker);
   {marker.setAnimation(google.maps.Animation.BOUNCE)};
   setTimeout(() => { marker.setAnimation(null) }, 1400);
@@ -106,13 +96,18 @@ listItemClick = (venue) => {
     console.log(res);
     const newVenue = res.response.venue;
     const venueData = {
+      name: newVenue.name,
       photoPrefix: newVenue.bestPhoto.prefix,
       photoSuffix: newVenue.bestPhoto.suffix,
       url: "Website: " + newVenue.url,
+      rating: "Rating: " + newVenue.rating,
       price: "Price: " + newVenue.price.message
     };
-    this.infoWindow.setContent("<img src="+ venueData.photoPrefix + "200x200" + venueData.photoSuffix + ">" + "<p>"+venueData.url+ "</p>" + "<p>"+venueData.price+"</p>");
+    const infoBoxContent = "<p>" + venueData.name + "</p>" + "<img src=" + venueData.photoPrefix + "200x200" + venueData.photoSuffix + ">" + "<p>" + venueData.url + "</p>" + "<p>" + venueData.rating + "</p>" + "<p>" + venueData.price + "</p>";
+    this.infoWindow.setContent(infoBoxContent);
     console.log(venueData);
+  }).catch(error => {
+    alert('FourSquare API Failed.')
   });
 }
 

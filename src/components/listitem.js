@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-/*global google*/
 
-class ListItem extends Component {
+export default class ListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,11 +17,13 @@ class ListItem extends Component {
   render() {
 
     return (
-      <li className="listItem" key={this.props.index} onClick={() => { this.props.listItemClick(this.props.venue) }}>
-        { this.props.venue.name }
-      </li>
+      <div>
+        <p> {this.props.venueData.name} </p>
+        <img src={this.props.venueData.photoPrefix+"200x200"+this.props.venueData.photoSuffix}/>
+        <p>{this.props.venueData.url}</p>
+        <p>{this.props.venueData.rating}</p>
+        <p>{this.props.venueData.price}</p>
+      </div>
     );
   }
 }
-
-export default ListItem
