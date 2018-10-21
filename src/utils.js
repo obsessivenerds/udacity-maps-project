@@ -19,6 +19,6 @@ export function load_google_maps() {
 export function load_locations() {
   let location = 'Indianapolis, IN';
   let query = 'Brewery';
-  var apiURL = 'https://api.foursquare.com/v2/venues/search?client_id=0MWI02AE4SRTIWFRSK5USP23C0OYF11ZNEQLXPOPUDQX2CQ3&client_secret=T0R0WIU5UYSY30RZS1BQDHNYZ3A4SWXTPX0524EEMQZMYYOM&v=20181006%20&limit=10&near=' + location + '&query=' + query + '';
+  var apiURL = 'https://api.foursquare.com/v2/venues/search?client_id=0MWI02AE4SRTIWFRSK5USP23C0OYF11ZNEQLXPOPUDQX2CQ3&client_secret=T0R0WIU5UYSY30RZS1BQDHNYZ3A4SWXTPX0524EEMQZMYYOM&v=20181006%20&limit=20&near=' + location + '&query=' + query + '';
   return fetch(apiURL).then(resp => resp.json())
 }

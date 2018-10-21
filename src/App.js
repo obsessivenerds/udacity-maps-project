@@ -3,6 +3,8 @@ import './App.css';
 import { load_google_maps, load_locations } from "./utils";
 import SquareAPI from "./API/FourSquareAPI";
 import SideBar from './components/sidebar';
+import NavBar from "./components/navbar"
+import MenuIcon from "./components/menuicon"
 /*global google*/
 
 class App extends Component {
@@ -10,8 +12,15 @@ class App extends Component {
     super(props);
     this.state = {
       query: '',
-      venues: []
-    }
+      venues: [],
+      showMenu:true
+    };
+    this.toggleMenu = this.toggleMenu.bind(this);
+  }
+/*toggleMenu functionality developed with guidance from user
+Gegenwind on Stack OverFlow: https://stackoverflow.com/questions/47032248/how-to-make-clicking-a-menu-button-toggle-show-hide-of-a-menu-sidebar-component */
+  toggleMenu() {
+    this.setState({showMenu: !this.state.showMenu})
   }
 
 componentDidMount() {
@@ -114,10 +123,13 @@ listItemClick = (venue) => {
   render() {
     return (
       <div className="App">
+        <MenuIcon toggleMenu={this.toggleMenu}/>
         <SideBar
+          showMenu={this.state.showMenu}
           listItemClick = { this.listItemClick }
           filterVenues = { this.filterVenues }
-          filteredVenues = { this.state.filteredVenues }/>
+          filteredVenues = { this.state.filteredVenues }
+          />
         <div id="map">
 
         </div>
