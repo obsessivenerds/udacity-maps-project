@@ -9,6 +9,7 @@
 #search {
 height: 2rem;
 font-size: 1rem;
+width: 250px;
 }
 
 /* --- */
@@ -61,11 +62,11 @@ li.listItem {
   text-align: left;
 }
 
-@media (max-width: 475px) {
+@media (max-width: 320px) {
   #head-text {font-size: 1rem; padding: 0px 10px;}
   .menu-text {padding: 0px 10px;}
   .sideBar{
-    display:none;
+    max-width: 150px;
   }
 }
 

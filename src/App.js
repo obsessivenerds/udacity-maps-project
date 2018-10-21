@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       query: '',
       venues: [],
-      showMenu:true
+      showMenu:false
     };
     this.toggleMenu = this.toggleMenu.bind(this);
   }
@@ -68,8 +68,6 @@ componentDidMount() {
 
       google.maps.event.addListener(marker, 'click', () => {
         this.listItemClick(venue);
-        this.map.setCenter(marker.position);
-        this.infoWindow.open(this.map, marker);
         this.simpleWindow.close();
       });
 
@@ -97,7 +95,6 @@ listItemClick = (venue) => {
 
   this.map.setCenter(marker.position);
   this.map.panBy(0, -150);
-  this.infoWindow.open(this.map, marker);
   {marker.setAnimation(google.maps.Animation.BOUNCE)};
   setTimeout(() => { marker.setAnimation(null) }, 1400);
   SquareAPI.getVenueDetails(marker.id)
@@ -114,6 +111,7 @@ listItemClick = (venue) => {
     };
     const infoBoxContent = "<p>" + venueData.name + "</p>" + "<img src=" + venueData.photoPrefix + "200x200" + venueData.photoSuffix + ">" + "<p>" + venueData.url + "</p>" + "<p>" + venueData.rating + "</p>" + "<p>" + venueData.price + "</p>";
     this.infoWindow.setContent(infoBoxContent);
+    this.infoWindow.open(this.map, marker);
     console.log(venueData);
   }).catch(error => {
     alert('FourSquare API Failed.')

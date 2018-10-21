@@ -9,11 +9,6 @@ class VenueList extends Component {
     };
   }
 
-  componentDidMount() {
-
-  }
-
-
   render() {
 
     return (
