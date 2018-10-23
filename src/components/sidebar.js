@@ -8,19 +8,22 @@ export default class SideBar extends Component {
       <aside>
         {this.props.showMenu &&
           <div className="sideBar">
-          <input
-            id={"search"}
-            type={"search"}
-            placeholder={"Filter FourSquare Venues"}
-            value={this.props.query}
-            onChange={(e) => { this.props.filterVenues(e.target.value) }}
-            aria-label="Filter FourSquare Venues"
-            />
-          <VenueList
-            {...this.props} listItemClick={this.props.listItemClick}
-            filterVenues={this.props.filterVenues}
-            filteredVenues={this.props.filteredVenues}
-            />
+            <input
+              id={"search"}
+              type={"search"}
+              placeholder={"Filter FourSquare Venues"}
+              value={this.props.query}
+              onChange={(e) => { this.props.filterVenues(e.target.value) }}
+              aria-label="Filter FourSquare Venues"
+              />
+            <br/>
+            <VenueList
+              {...this.props}
+              listItemClick={this.props.listItemClick}
+              filterVenues={this.props.filterVenues}
+              filteredVenues={this.props.filteredVenues}
+              />
+            <footer>Venue data provided by FourSquare API.</footer>
           </div>
         }
       </aside>

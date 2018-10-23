@@ -19,10 +19,10 @@ export default class VenueList extends Component {
               className="listItem"
               tabIndex="0"
               key={index}
-              onClick={() => {
-               this.props.listItemClick(venue) }}
-              onKeyDown={() => {this.props.listItemClick(venue)}}>
-              { venue.name }
+              onClick={() => {this.props.listItemClick(venue)}}
+              onKeyDown={() => {this.props.listItemClick(venue)}}
+              >
+              {venue.name}
             </li>
           ))
         }

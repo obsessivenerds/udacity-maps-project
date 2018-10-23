@@ -1,3 +1,7 @@
+/* API functions written with guidance from student Forrest Walker's
+walk-through playlist at https://www.youtube.com/playlist?list=PL4rQq4MQP1crXuPtruu_eijgOUUXhcUCP */
+},
+
 class Helper {
   static baseURL() {
     return "https://api.foursquare.com/v2"

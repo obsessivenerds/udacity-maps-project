@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import { load_google_maps, load_locations } from "./utils";
+import { loadMap, loadVenues } from "./utils";
 import SquareAPI from "./API/FourSquareAPI";
 import SideBar from './components/sidebar';
 import MenuIcon from "./components/menuicon"
 /*global google*/
 
 class App extends Component {
+  //constructor includes setting state for showing/hiding with function
   constructor(props) {
     super(props);
     this.state = {
@@ -22,9 +23,11 @@ Gegenwind on Stack OverFlow: https://stackoverflow.com/questions/47032248/how-to
     this.setState({showMenu: !this.state.showMenu})
   }
 
+/*promises developed with guidance from walkthrough by coach Ryan Waite:
+https://www.youtube.com/watch?v=5J6fs_BlVC0&t=2s */
 componentDidMount() {
-  let googleMapsPromise = load_google_maps();
-  let locationPromise = load_locations();
+  let googleMapsPromise = loadMap();
+  let locationPromise = loadVenues();
 
   Promise.all([
     googleMapsPromise,
@@ -44,6 +47,7 @@ componentDidMount() {
       center: { lat: this.venues[0].location.lat, lng: this.venues[0].location.lng }
     });
 
+    //Define marker attributes
     this.venues.forEach(venue => {
       let marker = new google.maps.Marker({
         position: { lat: venue.location.lat, lng: venue.location.lng },
@@ -55,6 +59,7 @@ componentDidMount() {
         animation: google.maps.Animation.DROP
       });
 
+      //Set listeners for hovering over markers
       google.maps.event.addListener(marker, 'mouseover', () => {
         this.simpleWindow.open(this.map, marker);
         this.simpleWindow.setContent(venue.name);
@@ -64,6 +69,7 @@ componentDidMount() {
         this.simpleWindow.close();
       })
 
+      //Assign function for clicking on markers
       google.maps.event.addListener(marker, 'click', () => {
         this.listItemClick(venue);
         this.simpleWindow.close();
@@ -88,6 +94,7 @@ filterVenues = (query) => {
   this.setState({ filteredVenues: f, query });
 }
 
+//function for handling click on venue list items
 listItemClick = (venue) => {
   let marker = this.markers.filter(mrk => mrk.id === venue.id)[0];
 
@@ -95,6 +102,7 @@ listItemClick = (venue) => {
   this.map.panBy(0, -150);
   {marker.setAnimation(google.maps.Animation.BOUNCE)};
   setTimeout(() => { marker.setAnimation(null) }, 1400);
+  //Get details from FourSquare venues
   SquareAPI.getVenueDetails(marker.id)
   .then(res => {
     console.log(res);
@@ -107,6 +115,7 @@ listItemClick = (venue) => {
       rating: "Rating: " + newVenue.rating,
       price: "Price: " + newVenue.price.message
     };
+    //Define display data for InfoWindow
     const infoBoxContent = `<p>${venueData.name}</p><img src=${venueData.photoPrefix}200x200${venueData.photoSuffix} alt=${venueData.name}><p>${venueData.url}</p><p>${venueData.rating}</p><p>${venueData.price}</p>`;
     this.infoWindow.setContent(infoBoxContent);
     this.infoWindow.open(this.map, marker);

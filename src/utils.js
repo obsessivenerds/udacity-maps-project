@@ -1,4 +1,7 @@
-export function load_google_maps() {
+/*functions developed with guidance from walkthrough by coach Ryan Waite:
+https://www.youtube.com/watch?v=5J6fs_BlVC0&t=2s */
+
+export function loadMap() {
  return new Promise(function(resolve, reject) {
    // define the global callback that will run when google maps is loaded
    window.resolveGoogleMapsPromise = function() {
@@ -16,7 +19,7 @@ export function load_google_maps() {
  });
 }
 
-export function load_locations() {
+export function loadVenues() {
   let location = 'Indianapolis, IN';
   let query = 'Brewery';
   var apiURL = 'https://api.foursquare.com/v2/venues/search?client_id=0MWI02AE4SRTIWFRSK5USP23C0OYF11ZNEQLXPOPUDQX2CQ3&client_secret=T0R0WIU5UYSY30RZS1BQDHNYZ3A4SWXTPX0524EEMQZMYYOM&v=20181006%20&limit=20&near=' + location + '&query=' + query + '';

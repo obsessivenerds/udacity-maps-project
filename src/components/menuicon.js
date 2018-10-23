@@ -8,7 +8,7 @@ export default class MenuIcon extends Component {
     };
     this.toggleIcon = this.toggleIcon.bind(this);
   }
-  /* menu icon and function created with guidance from
+  /* menu icon and animation created with guidance from
   w3schools: https://www.w3schools.com/howto/howto_css_menu_icon.asp */
   toggleIcon() {
     const currentState = this.state.changeIcon;
