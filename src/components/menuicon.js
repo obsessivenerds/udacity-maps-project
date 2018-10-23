@@ -18,7 +18,13 @@ export default class MenuIcon extends Component {
 
   render() {
     return (
-      <div className={this.state.changeIcon ? 'menuIcon change' : 'menuIcon'} onClick={this.toggleIcon}>
+      <div
+        className={this.state.changeIcon ? 'menuIcon change' : 'menuIcon'}
+        tabIndex="0"
+        aria-label="menu"
+        onClick={this.toggleIcon}
+        onKeyPress={() => {this.toggleIcon()}}
+        >
         <div className="bar1"></div>
         <div className="bar2"></div>
         <div className="bar3"></div>

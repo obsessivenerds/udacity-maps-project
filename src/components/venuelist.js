@@ -15,8 +15,13 @@ export default class VenueList extends Component {
       <ol className="venueList">
         {
           this.props.filteredVenues && this.props.filteredVenues.length > 0 && this.props.filteredVenues.map((venue, index) => (
-            <li className="listItem" key={index} onClick={() => {
-               this.props.listItemClick(venue) }}>
+            <li
+              className="listItem"
+              tabIndex="0"
+              key={index}
+              onClick={() => {
+               this.props.listItemClick(venue) }}
+              onKeyDown={() => {this.props.listItemClick(venue)}}>
               { venue.name }
             </li>
           ))

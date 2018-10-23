@@ -107,7 +107,7 @@ listItemClick = (venue) => {
       rating: "Rating: " + newVenue.rating,
       price: "Price: " + newVenue.price.message
     };
-    const infoBoxContent = "<p>" + venueData.name + "</p>" + "<img src=" + venueData.photoPrefix + "200x200" + venueData.photoSuffix + ">" + "<p>" + venueData.url + "</p>" + "<p>" + venueData.rating + "</p>" + "<p>" + venueData.price + "</p>";
+    const infoBoxContent = `<p>${venueData.name}</p><img src=${venueData.photoPrefix}200x200${venueData.photoSuffix} alt=${venueData.name}><p>${venueData.url}</p><p>${venueData.rating}</p><p>${venueData.price}</p>`;
     this.infoWindow.setContent(infoBoxContent);
     this.infoWindow.open(this.map, marker);
     console.log(venueData);
