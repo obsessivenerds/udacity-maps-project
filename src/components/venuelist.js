@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class VenueList extends Component {
+export default class VenueList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +12,6 @@ class VenueList extends Component {
   render() {
 
     return (
-
       <ol className="venueList">
         {
           this.props.filteredVenues && this.props.filteredVenues.length > 0 && this.props.filteredVenues.map((venue, index) => (
@@ -26,5 +25,3 @@ class VenueList extends Component {
     );
   }
 }
-
-export default VenueList

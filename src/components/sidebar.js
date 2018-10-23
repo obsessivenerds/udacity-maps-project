@@ -3,30 +3,23 @@ import VenueList from "./venuelist";
 
 export default class SideBar extends Component {
 
-componentDidMount() {
-
-}
-
   render() {
-      return (
-        <div>
-          {this.props.showMenu &&
-            <div className="sideBar">
-            <input
-              id={"search"}
-              type={"search"}
-              placeholder={"Filter FourSquare Venues"} value={this.props.query} onChange={(e) => { this.props.filterVenues(e.target.value) }}/>
-            <br/>
-            <VenueList
-              {...this.props} listItemClick={this.props.listItemClick}
+    return (
+      <section>
+        {this.props.showMenu &&
+          <div className="sideBar">
+          <input
+            id={"search"}
+            type={"search"}
+            placeholder={"Filter FourSquare Venues"} value={this.props.query} onChange={(e) => { this.props.filterVenues(e.target.value) }}/>
+          <br/>
+          <VenueList
+            {...this.props} listItemClick={this.props.listItemClick}
+            filterVenues={this.props.filterVenues}
             filteredVenues={this.props.filteredVenues}  />
-          </div>}
-        </div>
-      )
+          </div>
+        }
+      </section>
+    )
   }
-  hide() {
-     this.setState({
-       open: false
-     })
-   }
 }

@@ -1,25 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
-import { load_google_maps, load_locations } from "./utils";
-import SquareAPI from "./API/FourSquareAPI";
-import SideBar from './components/sidebar';
-import MenuIcon from "./components/menuicon"
+import { load_google_maps, load_locations } from "../utils";
+import SquareAPI from "../API/FourSquareAPI";
 /*global google*/
 
-class App extends Component {
+export default class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
       query: '',
       venues: [],
-      showMenu:false
     };
-    this.toggleMenu = this.toggleMenu.bind(this);
-  }
-/*toggleMenu functionality developed with guidance from user
-Gegenwind on Stack OverFlow: https://stackoverflow.com/questions/47032248/how-to-make-clicking-a-menu-button-toggle-show-hide-of-a-menu-sidebar-component */
-  toggleMenu() {
-    this.setState({showMenu: !this.state.showMenu})
   }
 
 componentDidMount() {
@@ -34,6 +24,7 @@ componentDidMount() {
     console.log(values);
     let google = values[0];
     this.venues = values[1].response.venues;
+
     this.google = google;
     this.markers = [];
     this.infoWindow = new google.maps.InfoWindow();
@@ -118,20 +109,8 @@ listItemClick = (venue) => {
 
   render() {
     return (
-      <div className="App">
-        <MenuIcon toggleMenu={this.toggleMenu}/>
-        <SideBar
-          showMenu={this.state.showMenu}
-          listItemClick = { this.listItemClick }
-          filterVenues = { this.filterVenues }
-          filteredVenues = { this.state.filteredVenues }
-          />
         <div id="map">
-
         </div>
-      </div>
     );
   }
 }
-
-export default App;

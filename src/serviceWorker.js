@@ -52,6 +52,7 @@ export function register(config) {
       }
     });
   }
+  console.log("SW registered");
 }
 
 function registerValidSW(swUrl, config) {
