@@ -10,6 +10,7 @@ This project is a neighborhood map application that shows local breweries in the
 2. Install dependencies with `npm install`
 3. Use `npm start` to start a local server.
 4. Visit the site `http://localhost:3000`
+5. Please note that Service Workers only work in the production build and not in this development build. To run the production build and enable the Service Workers, use `npm run build` followed by `serve -s build` then visit `localhost:5000`.
 
 ### Dependencies
 

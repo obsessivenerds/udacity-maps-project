@@ -4,6 +4,7 @@ import { loadMap, loadVenues } from "./utils";
 import SquareAPI from "./API/FourSquareAPI";
 import SideBar from './components/sidebar';
 import MenuIcon from "./components/menuicon"
+import Map from "./components/map"
 /*global google*/
 
 class App extends Component {
@@ -78,8 +79,10 @@ componentDidMount() {
       this.markers.push(marker);
     });
     this.setState({ filteredVenues: this.venues });
+  }).catch(error => {
+    console.log(error);
+    alert('FourSquare API Failed.')
   });
-
 }
 
 //loop through markers and compare name property to query
@@ -116,11 +119,12 @@ listItemClick = (venue) => {
       price: "Price: " + newVenue.price.message
     };
     //Define display data for InfoWindow
-    const infoBoxContent = `<p>${venueData.name}</p><img src=${venueData.photoPrefix}200x200${venueData.photoSuffix} alt=${venueData.name}><p>${venueData.url}</p><p>${venueData.rating}</p><p>${venueData.price}</p>`;
+    const infoBoxContent = `<p>${venueData.name}</p><img src=${venueData.photoPrefix}200x200${venueData.photoSuffix} alt="${venueData.name}"><p>${venueData.url}</p><p>${venueData.rating}</p><p>${venueData.price}</p>`;
     this.infoWindow.setContent(infoBoxContent);
     this.infoWindow.open(this.map, marker);
     console.log(venueData);
   }).catch(error => {
+    console.log(error);
     alert('FourSquare API Failed.')
   });
 }
@@ -135,9 +139,7 @@ listItemClick = (venue) => {
           filterVenues = { this.filterVenues }
           filteredVenues = { this.state.filteredVenues }
           />
-        <div id="map">
-
-        </div>
+        <Map name={this.state.name!= undefined ? this.state.name : "FourSquare API Failed. Please check your credentials."}/>
       </div>
     );
   }

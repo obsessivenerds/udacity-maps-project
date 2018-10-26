@@ -18,6 +18,7 @@ export default class VenueList extends Component {
             <li
               className="listItem"
               tabIndex="0"
+              aria-labelledby={venue.name}
               key={index}
               onClick={() => {this.props.listItemClick(venue)}}
               onKeyDown={() => {this.props.listItemClick(venue)}}
